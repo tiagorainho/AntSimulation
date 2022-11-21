@@ -82,6 +82,12 @@ class AntGame(Game):
             for f in self.food:
                 if ant.x == f.x and ant.y == f.y:
                     ant.eat(f)
+                
+        
+        #for ant in self.ants:
+        #    for ant in pygame.sprite.spritecollide(ant, group=self.all_sprites):
+                
+
 
         # remove food without resources
         for f in self.food:

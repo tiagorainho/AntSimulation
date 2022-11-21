@@ -54,13 +54,21 @@ class ReturnColony(State):
 
         # compute vector to colony
         vector = [ant.colony.x - ant.x, ant.colony.y - ant.y]
+        x_abs, y_abs = abs(vector[0]), abs(vector[1])
 
-        # normalize vector
-        if vector[0] != 0:
-            vector[0] = 1 if vector[0] > 0 else -1
+        normalized_vector = [1, 1]
+        if x_abs > y_abs:
+            normalized_vector[1] = 0
+        if x_abs < y_abs:
+            normalized_vector[0] = 0
+            
+        # fix vector direction
+        if normalized_vector[0] != 0:
+            normalized_vector[0] *= 1 if vector[0] > 0 else -1
 
-        if vector[1] != 0:
-            vector[1] = 1 if vector[1] > 0 else -1
+        if normalized_vector[1] != 0:
+            normalized_vector[1] *= 1 if vector[1] > 0 else -1
+
 
         # release pheromones while returning home
         ant.release_pheromone(amount = Pheromone.DEFAULT_INCREASE_AMOUNT/ant.steps_from_food)
@@ -70,5 +78,5 @@ class ReturnColony(State):
         # ant.release_pheromone(amount = pow(10*ant.steps_from_food, -2) + Pheromone.DEFAULT_INCREASE_AMOUNT)
         # ant.release_pheromone(amount = Pheromone.MAXIMUM_AMOUNT-Pheromone.MAXIMUM_AMOUNT * (ant.steps_from_food/Pheromone.MAXIMUM_STEPS))
 
-        ant.walk(vector = vector)
+        ant.walk(vector = normalized_vector)
         
