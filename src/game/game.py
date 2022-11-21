@@ -1,3 +1,5 @@
+from typing import DefaultDict
+from collections import defaultdict
 
 import pygame
 
@@ -7,7 +9,7 @@ class Game:
     display: pygame.display
     screen: pygame.Surface
     running: bool
-    all_sprites: pygame.sprite.Group
+    sprites: DefaultDict[str, pygame.sprite.Group]
     scale: int
     height: int
     width: int
@@ -24,7 +26,7 @@ class Game:
         self.screen = pygame.Surface((self.width, self.height))
         self.fps = 20
 
-        self.all_sprites = pygame.sprite.RenderUpdates()
+        self.sprites = defaultdict(pygame.sprite.Group)
         
         pygame.mixer.init()
         pygame.mixer.stop()
@@ -48,11 +50,15 @@ class Game:
 
             # render window
             self.screen.fill("white")
-            self.all_sprites.update()
-            self.all_sprites.draw(self.screen)
+            self.render_sprites()
 
             # update display
             pygame.Surface.blit(self.display, self.screen, (0,0))
             pygame.display.flip()
 
             self.clock.tick(self.fps)
+        
+    def render_sprites(self):
+        for group in self.sprites.values():
+            group.update()
+            group.draw(self.screen)

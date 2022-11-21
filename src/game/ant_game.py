@@ -46,19 +46,19 @@ class AntGame(Game):
         
 
         # add sprites
-        self.all_sprites.add(
+        self.sprites[Ant.__class__.__str__].add(
             AntSprite(width=width, height=height, scale=scale, ants=self.ants)
         )
 
-        self.all_sprites.add(
+        self.sprites[Pheromone.__class__.__str__].add(
             PheromoneSprite(width=width, height=height, scale=scale, pheromones=self.pheromones)
         )
 
-        self.all_sprites.add(
+        self.sprites[Food.__class__.__str__].add(
             FoodSprite(width=width, height=height, scale=scale, food=self.food)
         )
 
-        self.all_sprites.add(
+        self.sprites[Colony.__class__.__str__].add(
             ColonySprite(width=width, height=height, scale=scale, colony=self.colony)
         )
 
@@ -68,7 +68,7 @@ class AntGame(Game):
         Game logic
         """
 
-        # FAZER: press scape to switch simulation settings
+        # TO DO: press scape to switch simulation settings
         # handle events
         # for event in events:
 
@@ -97,6 +97,3 @@ class AntGame(Game):
             # remove pheromones without trail
             if pheromone.weight == 0:
                 del self.pheromones[(pheromone.x, pheromone.y)]
-        
-        
-        
