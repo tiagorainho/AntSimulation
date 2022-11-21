@@ -1,8 +1,8 @@
 
-DEFAULT_INCREASE_AMOUNT = 0.1
-DEFAULT_DECREASE_AMOUNT = 0.005
-
 class Pheromone:
+    DEFAULT_INCREASE_AMOUNT = 0.1
+    DEFAULT_DECREASE_AMOUNT = 0.005
+
     x: int
     y: int
     weight: float

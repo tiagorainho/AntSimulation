@@ -10,7 +10,7 @@ class ColonySprite(CustomSprite):
     colonies: List[Colony]
     
     def __init__(self, width: int, height: int, scale: int, colony: List[Colony]):
-        super().__init__(width=width, height=height, scale=scale, size = 3)
+        super().__init__(width=width, height=height, scale=scale, size = 5)
 
         self.colonies = colony
 

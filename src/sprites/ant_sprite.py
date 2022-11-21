@@ -10,7 +10,7 @@ class AntSprite(CustomSprite):
     ants: List[Ant]
     
     def __init__(self, width: int, height: int, scale: int, ants: List[Ant]):
-        super().__init__(width=width, height=height, scale=scale)
+        super().__init__(width=width, height=height, scale=scale, size = 3)
         self.ants = ants
 
         self.image = pygame.Surface([width * scale, height * scale])

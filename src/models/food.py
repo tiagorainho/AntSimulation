@@ -4,7 +4,7 @@ class Food:
     y: int
     resources: int
 
-    def __init__(self, x: int, y: int, resources: int = 20):
+    def __init__(self, x: int, y: int, resources: int = 50):
         self.x = x
         self.y = y
         self.resources = resources

@@ -9,7 +9,7 @@ class FoodSprite(CustomSprite):
     food: List[Food]
     
     def __init__(self, width: int, height: int, scale: int, food: List[Food]):
-        super().__init__(width=width, height=height, scale=scale, size=2)
+        super().__init__(width=width, height=height, scale=scale, size=3)
 
         self.food = food
 

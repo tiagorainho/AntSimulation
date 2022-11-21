@@ -1,7 +1,7 @@
 
-from typing import List, Mapping, Tuple
 import pygame
 
+from typing import List, Mapping, Tuple
 from random import randint
 
 from game.game import Game
@@ -16,33 +16,33 @@ from sprites.colony_sprite import ColonySprite
 from sprites.pheromone_sprite import PheromoneSprite
 
 
-GAME_EVENT = pygame.event.custom_type()
-game_grid = (150, 150)
-
 INITIAL_NUMBER_OF_ANTS = 200
-NUMBER_OF_FOOD = 20
-NUMBER_OF_COLONIES = 1
+NUMBER_OF_FOOD = 50
+NUMBER_OF_COLONIES = 20
 
-class AntGame(Game):    
+
+class AntGame(Game):
     food: List[Food]
     colony: List[Colony]
     ants: List[Ant]
     pheromones: Mapping[Tuple[int, int], Pheromone]
+    game_grid: Tuple[int, int]
 
     def __init__(self, width: int, height: int, scale: int):
-        super().__init__(game_grid[0], game_grid[1], scale)
+        self.game_grid = (width/scale, height/scale)
+        super().__init__(height = self.game_grid[1], width = self.game_grid[0], scale = scale)
 
         # create colonies
-        self.colony = [Colony(randint(0, game_grid[0]), randint(0, game_grid[1])) for _ in range(NUMBER_OF_COLONIES)]
+        self.colony = [Colony(randint(0, self.game_grid[0]), randint(0, self.game_grid[1])) for _ in range(NUMBER_OF_COLONIES)]
 
         # create ants
         self.ants = []
         self.pheromones = dict()
         for c in self.colony:
-            self.ants.extend([Ant(colony=c, pheromone_layer=self.pheromones, game_grid=game_grid) for _ in range(INITIAL_NUMBER_OF_ANTS)])
+            self.ants.extend([Ant(colony=c, pheromone_layer=self.pheromones, game_grid=self.game_grid) for _ in range(INITIAL_NUMBER_OF_ANTS)])
 
         # create food
-        self.food = [Food(randint(0, game_grid[0]), randint(0, game_grid[1])) for _ in range(NUMBER_OF_FOOD)]
+        self.food = [Food(randint(0, self.game_grid[0]), randint(0, self.game_grid[1])) for _ in range(NUMBER_OF_FOOD)]
         
 
         # add sprites
@@ -87,7 +87,7 @@ class AntGame(Game):
         for f in self.food:
             if f.resources == 0:
                 self.food.remove(f)
-                self.food.append(Food(randint(0, game_grid[0]), randint(0, game_grid[1])))
+                self.food.append(Food(randint(0, self.game_grid[0]), randint(0, self.game_grid[1])))
 
         # decay pheromones
         for pheromone in self.pheromones.values():

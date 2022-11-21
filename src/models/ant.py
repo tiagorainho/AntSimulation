@@ -73,5 +73,13 @@ class Ant:
         # get the one with the highest weight
         higher_pheromone = min(close_pheromones, key=lambda pheromone: pheromone.weight)
 
+        # check if it is not the last pheromone
+        curr_position_pheromone = self.pheromones.get((self.x, self.y), None)
+        if curr_position_pheromone is not None:
+            if curr_position_pheromone.weight > higher_pheromone.weight:
+                self.pheromones[(self.x, self.y)].decrease_intensity(amount = Pheromone.DEFAULT_DECREASE_AMOUNT)
+                return None
+
+
         # get the vector the ant needs to move to
         return (higher_pheromone.x - self.x, higher_pheromone.y - self.y)
