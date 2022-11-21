@@ -1,7 +1,7 @@
 from game.game import Game
 from game.ant_game import AntGame
 
-SCALE = 2
+SCALE = 3
 import pygame
 
 if __name__ == '__main__':

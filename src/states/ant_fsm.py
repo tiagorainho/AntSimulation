@@ -2,6 +2,8 @@
 from states.fsm import FSM, State, Transition
 from random import randint
 
+from models.pheromone import Pheromone
+
 class AntFSM(FSM):
 
     def __init__(self):
@@ -26,6 +28,7 @@ class Forage(State):
         super().__init__(self.__class__.__name__)
 
     def update(self, ant):
+        ant.steps_from_food = 0
 
         # get cells around to check for feromones
         vector = ant.search_pheromones()
@@ -46,6 +49,8 @@ class ReturnColony(State):
         if ant.x == ant.colony.x and ant.y == ant.colony.y:
             ant.fsm.event("reach_colony", ant)
             return
+        
+        ant.steps_from_food += 1
 
         # compute vector to colony
         vector = [ant.colony.x - ant.x, ant.colony.y - ant.y]
@@ -57,6 +62,13 @@ class ReturnColony(State):
         if vector[1] != 0:
             vector[1] = 1 if vector[1] > 0 else -1
 
-        ant.release_pheromone()
+        # release pheromones while returning home
+        ant.release_pheromone(amount = Pheromone.DEFAULT_INCREASE_AMOUNT/ant.steps_from_food)
+        
+        # pheromone release alternative functions
+        # ant.release_pheromone(amount = Pheromone.DEFAULT_INCREASE_AMOUNT)
+        # ant.release_pheromone(amount = pow(10*ant.steps_from_food, -2) + Pheromone.DEFAULT_INCREASE_AMOUNT)
+        # ant.release_pheromone(amount = Pheromone.MAXIMUM_AMOUNT-Pheromone.MAXIMUM_AMOUNT * (ant.steps_from_food/Pheromone.MAXIMUM_STEPS))
+
         ant.walk(vector = vector)
         

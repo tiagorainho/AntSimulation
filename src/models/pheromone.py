@@ -1,7 +1,9 @@
 
 class Pheromone:
-    DEFAULT_INCREASE_AMOUNT = 0.1
+    DEFAULT_INCREASE_AMOUNT = 0.05
     DEFAULT_DECREASE_AMOUNT = 0.005
+    MAXIMUM_AMOUNT = 5
+    MAXIMUM_STEPS = 20
 
     x: int
     y: int
@@ -14,12 +16,10 @@ class Pheromone:
 
 
     def decrease_intensity(self, amount: float = DEFAULT_DECREASE_AMOUNT):
-        to_remove: float = self.weight
-        if self.weight > amount:
-            to_remove = amount
-        
-        self.weight -= to_remove
+        decreased_amount = self.weight - amount
+        self.weight = decreased_amount if decreased_amount >= 0 else 0
 
 
     def increase_intensity(self, amount: float = DEFAULT_INCREASE_AMOUNT):
-        self.weight += amount
+        sum_amount = self.weight + amount
+        self.weight = self.MAXIMUM_AMOUNT if sum_amount > self.MAXIMUM_AMOUNT else sum_amount

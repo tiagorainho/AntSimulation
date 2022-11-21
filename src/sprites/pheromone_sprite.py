@@ -9,7 +9,7 @@ class PheromoneSprite(CustomSprite):
     pheromones_layer: Mapping[Tuple[int, int], Pheromone]
     
     def __init__(self, width: int, height: int, scale: int, pheromones: Mapping[Tuple[int, int], Pheromone]):
-        super().__init__(width=width, height=height, scale=scale, size = 1)
+        super().__init__(width=width, height=height, scale=scale, size = 0.5)
 
         self.pheromones_layer = pheromones
 

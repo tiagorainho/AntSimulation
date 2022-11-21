@@ -3,7 +3,8 @@ class State:
         self.name = name
 
     def enter(self):
-        print(f"Entering {self.name}")
+        # print(f"Entering {self.name}")
+        pass
 
     def update(self, object: any):
         pass
