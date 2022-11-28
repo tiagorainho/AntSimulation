@@ -46,9 +46,10 @@ class AntGame(Game):
         
 
         # add sprites
-        self.sprites[Ant.__class__.__str__].add(
-            AntSprite(width=width, height=height, scale=scale, ants=self.ants)
-        )
+        for ant in self.ants:
+            self.sprites[Ant.__class__.__str__].add(
+                AntSprite(width=width, height=height, scale=scale, ant=ant)
+            )
 
         self.sprites[Pheromone.__class__.__str__].add(
             PheromoneSprite(width=width, height=height, scale=scale, pheromones=self.pheromones)
@@ -78,17 +79,18 @@ class AntGame(Game):
             ant.update()
         
         # check if ants can eat
+        
         for ant in self.ants:
             for f in self.food:
                 if ant.x == f.x and ant.y == f.y:
                     ant.eat(f)
-                
         
-        #for ant in self.ants:
-        #    for ant in pygame.sprite.spritecollide(ant, group=self.all_sprites):
                 
-
-
+        """
+        for ant_sprite in self.sprites[Ant.__class__.__str__]:
+            for f in pygame.sprite.spritecollide(ant_sprite, self.sprites[Food.__class__.__str__], 1):
+                ant_sprite.ant.eat(f)
+        """
         # remove food without resources
         for f in self.food:
             if f.resources == 0:
